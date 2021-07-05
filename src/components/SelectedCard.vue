@@ -5,7 +5,7 @@
     </div>
     <div class="webpage__exchanger-select--input">
       <span>Volume: </span>
-      <input type="number" min="0" v-model="exchangeVolume" placeholder="Enter amount" />
+      <input type="number" min="0" step="0.1" v-model="exchangeVolume" placeholder="Enter amount" />
     </div>
     <div class="webpage__exchanger-select--radio">
       <template v-for="(item, index) in VALUE_CURRENCIES">
