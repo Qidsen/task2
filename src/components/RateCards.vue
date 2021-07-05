@@ -10,7 +10,7 @@
           <template v-for="(item, index) in rateValue">
             <tr :key="index" class="webpage__exchanger-rates--current">
               <td class="webpage__exchanger-rates--current_crypto">
-                {{ index }}:
+                {{ `${index}:` }}
               </td>
               <td class="webpage__exchanger-rates--current_rate">
                 {{ (item / cryptoItem).toFixed(2) }}
@@ -46,7 +46,6 @@ export default {
   },
   async created() {
     await this.GET_RATES(this.rateCrypto, this.rateValue);
-    console.log(this.rateCrypto, this.rateValue);
   },
 };
 </script>
