@@ -8,8 +8,12 @@ export default {
     rateCrypto: {},
     rateValue: {},
   },
+  getters: {
+    getRatesCrypto: (state) => state.rateCrypto,
+    getRatesValue: (state) => state.rateValue,
+  }, 
   mutations: {
-    getRatesCrypto(state, payload) {
+    takeRatesCrypto(state, payload) {
       let filteredArray = {};
       Object.keys(payload).filter(function(e){
         return CRYPTO_CURRENCIES.indexOf(e) >= 0;
@@ -18,7 +22,7 @@ export default {
       });
       state.rateCrypto = filteredArray;
     },
-    getRatesValue(state, payload) {
+    takeRatesValue(state, payload) {
       let filteredArray = {};
       Object.keys(payload).filter(function(e){
         return VALUE_CURRENCIES.indexOf(e) >= 0;
@@ -31,8 +35,8 @@ export default {
   actions: {
     GET_RATES({ commit }) {
       return axios.get('/rates').then(({ data }) => {
-        commit('getRatesCrypto', data.rates);
-        commit('getRatesValue', data.rates);
+        commit('takeRatesCrypto', data.rates);
+        commit('takeRatesValue', data.rates);
       });
     },
   },

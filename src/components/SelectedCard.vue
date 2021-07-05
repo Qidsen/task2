@@ -18,7 +18,14 @@
         <b>
           {{ `${exchangeVolume}${selected}` }}
         </b>
-        will be 
+        will be
+        <b>
+          {{ (exchangeVolume * (getRatesValue[exchangeCurrency] / getRatesCrypto[selected])).toFixed(2) }}
+        </b>
+        in
+        <b>
+          {{ exchangeCurrency }}
+        </b>
       </span>
     </div>
   </div>
@@ -26,13 +33,16 @@
 
 <script>
 import { VALUE_CURRENCIES } from '@/constants/VALUE_CURRENCIES';
+import { CRYPTO_CURRENCIES } from '@/constants/CRYPTO_CURRENCIES'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'SelectedCard',
   data: () => ({
     VALUE_CURRENCIES,
     exchangeVolume: 0,
-    selected: 'BTC',
+    selected: CRYPTO_CURRENCIES[0],
+    exchangeCurrency: VALUE_CURRENCIES[0],
   }),
 
   watch: {
@@ -43,7 +53,11 @@ export default {
         else this.exchangeVolume = +val
       },
     },
-  }
+  },
+
+  computed: {
+    ...mapGetters('rates', ['getRatesCrypto' ,'getRatesValue']),
+  },
 }
 </script>
 
@@ -83,7 +97,7 @@ export default {
         color: #78a6eb;
         font-family: 'Trebuchet MS', sans-serif;
         font-size: 24px;
-      }      
+      }
     }
     .webpage__exchanger-select--radio {
       width: 100%;

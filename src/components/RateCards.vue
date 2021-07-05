@@ -1,19 +1,19 @@
 <template>
   <div class="webpage__exchanger-rates">
-    <div class="webpage__exchanger-rates--card" v-for="(cryptoItem, index) in crypto" :key="index">
+    <div class="webpage__exchanger-rates--card" v-for="(cryptoItem, index) in rateCrypto" :key="index">
       <div class="webpage__exchanger-rates--crypto">
-        <img :src='require(`@/assets/img/png/${cryptoItem}.png`)' :alt='`${cryptoItem}`'>
-        <span> {{ cryptoItem }} </span>
+        <img :src='require(`@/assets/img/png/${index}.png`)' :alt='`${index}`'>
+        <span> {{ index }} </span>
       </div>
       <table class="webpage__exchanger-table">
         <tbody>
-          <template v-for="(item, index) in rates">
+          <template v-for="(item, index) in rateValue">
             <tr :key="index" class="webpage__exchanger-rates--current">
               <td class="webpage__exchanger-rates--current_crypto">
                 {{ index }}:
               </td>
               <td class="webpage__exchanger-rates--current_rate">
-                {{ item }}
+                {{ (item / cryptoItem).toFixed(2) }}
               </td>
             </tr>
           </template>
@@ -29,14 +29,6 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'RateCards',
   props: {
-    crypto: {
-      type: Array,
-      default: () => [
-        'BTC',
-        'ETH',
-        'XRP',
-      ],
-    },
     rates: {
       type: Object,
       default: () => ({
@@ -54,7 +46,7 @@ export default {
   },
   async created() {
     await this.GET_RATES(this.rateCrypto, this.rateValue);
-    console.log(this.rateCrypto.BTC, this.rateValue);
+    console.log(this.rateCrypto, this.rateValue);
   },
 };
 </script>
@@ -97,7 +89,7 @@ export default {
         width: 100%;
 
         .webpage__exchanger-rates--current_crypto, .webpage__exchanger-rates--current_rate {
-          padding: 10px 40px;
+          padding: 10px 30px;
           font-family: 'Trebuchet MS', sans-serif;
           font-size: 32px;
           font-weight: bold;
@@ -105,6 +97,7 @@ export default {
           letter-spacing: 3px;
         }
         .webpage__exchanger-rates--current_rate {
+          padding: 10px 10px;
           font-weight: normal;
         }
       }
