@@ -88,7 +88,7 @@ export default {
         width: 100%;
 
         .webpage__exchanger-rates--current_crypto, .webpage__exchanger-rates--current_rate {
-          padding: 10px 30px;
+          padding: 10px 25px;
           font-family: 'Trebuchet MS', sans-serif;
           font-size: 32px;
           font-weight: bold;
@@ -96,7 +96,7 @@ export default {
           letter-spacing: 3px;
         }
         .webpage__exchanger-rates--current_rate {
-          padding: 10px 10px;
+          padding: 0;
           font-weight: normal;
         }
       }
