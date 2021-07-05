@@ -1,7 +1,7 @@
 <template>
   <div class="webpage__exchanger-select">
     <div class="webpage__exchanger-select--current">
-      <span>Selected coin: </span>
+      <span>Selected coin: {{ selected }}</span>
     </div>
     <div class="webpage__exchanger-select--input">
       <span>Volume: </span>
@@ -33,7 +33,7 @@
 
 <script>
 import { VALUE_CURRENCIES } from '@/constants/VALUE_CURRENCIES';
-import { CRYPTO_CURRENCIES } from '@/constants/CRYPTO_CURRENCIES'
+import { CRYPTO_CURRENCIES } from '@/constants/CRYPTO_CURRENCIES';
 import { mapGetters } from 'vuex';
 
 export default {
