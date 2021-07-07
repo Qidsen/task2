@@ -1,7 +1,7 @@
 <template>
   <div class="webpage__exchanger-rates">
     <div v-for="(cryptoItem, index) in rateCrypto" :key="index"
-      @click="Object.keys(rateCrypto) == index? activePage : false" 
+      @click="activePage"
       :class="{ 'active': isActive }" 
       class="webpage__exchanger-rates--card" >
 
@@ -11,13 +11,13 @@
       </div>
       <table class="webpage__exchanger-table">
         <tbody>
-          <template v-for="(item, index) in rateValue">
+          <template v-for="(valueItem, index) in rateValue">
             <tr :key="index" class="webpage__exchanger-rates--current">
               <td class="webpage__exchanger-rates--current_crypto">
                 {{ `${index}:` }}
               </td>
               <td class="webpage__exchanger-rates--current_rate">
-                {{ (item / cryptoItem).toFixed(2) }}
+                {{ (valueItem / cryptoItem).toFixed(2) }}
               </td>
             </tr>
           </template>
@@ -28,26 +28,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'RateCards',
   data: () => ({
     isActive: false,
-  }),
-  props: {
-    rates: {
-      type: Object,
-      default: () => ({
-        USD: 0,
-        UAH: 0,
-        RUB: 0,
-      }),
-    },
-  },
+  }), 
   methods: {
-    ...mapActions('rates', ['GET_RATES']),
-
     activePage() {
       this.isActive = true;
       console.log(Object.entries(this.rateCrypto))
@@ -55,10 +43,6 @@ export default {
   },
   computed: {
     ...mapState('rates', ['rateCrypto', 'rateValue']),
-  },
-  async created() {
-    await this.GET_RATES(this.rateCrypto, this.rateValue);
-    console.log(this.rateCrypto);
   },
 };
 </script>
@@ -68,6 +52,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 
     .webpage__exchanger-rates--card {
       width: 100%;
@@ -112,6 +97,16 @@ export default {
         .webpage__exchanger-rates--current_rate {
           padding: 0;
           font-weight: normal;
+        }
+      }
+    }
+    .active {
+      background-color: #185088;
+      border: 1px solid #fff;
+      transition: all 0.3s;
+      .webpage__exchanger-rates--current {
+        .webpage__exchanger-rates--current_crypto, .webpage__exchanger-rates--current_rate {
+          color: #a6c5e4;
         }
       }
     }
