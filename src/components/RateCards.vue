@@ -1,6 +1,10 @@
 <template>
   <div class="webpage__exchanger-rates">
-    <div class="webpage__exchanger-rates--card" v-for="(cryptoItem, index) in rateCrypto" :key="index">
+    <div v-for="(cryptoItem, index) in rateCrypto" :key="index"
+      @click="Object.keys(rateCrypto) == index? activePage : false" 
+      :class="{ 'active': isActive }" 
+      class="webpage__exchanger-rates--card" >
+
       <div class="webpage__exchanger-rates--crypto">
         <img :src='require(`@/assets/img/png/${index}.png`)' :alt='`${index}`'>
         <span> {{ index }} </span>
@@ -28,6 +32,9 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'RateCards',
+  data: () => ({
+    isActive: false,
+  }),
   props: {
     rates: {
       type: Object,
@@ -40,12 +47,18 @@ export default {
   },
   methods: {
     ...mapActions('rates', ['GET_RATES']),
+
+    activePage() {
+      this.isActive = true;
+      console.log(Object.entries(this.rateCrypto))
+    },
   },
   computed: {
     ...mapState('rates', ['rateCrypto', 'rateValue']),
   },
   async created() {
     await this.GET_RATES(this.rateCrypto, this.rateValue);
+    console.log(this.rateCrypto);
   },
 };
 </script>
@@ -64,6 +77,7 @@ export default {
       margin: 120px 10px;
       background-color: #0d2f52;
       display: flex;
+      cursor: pointer;
 
       .webpage__exchanger-rates--crypto {
         display: flex;
