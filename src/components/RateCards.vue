@@ -1,8 +1,8 @@
 <template>
   <div class="webpage__exchanger-rates">
     <div v-for="(cryptoItem, index) in rateCrypto" :key="index"
-      @click="activePage"
-      :class="{ 'active': isActive }" 
+      @click="activePage(index)"
+      :class="{ 'active': index == 'ETH' }" 
       class="webpage__exchanger-rates--card" >
 
       <div class="webpage__exchanger-rates--crypto">
@@ -38,7 +38,6 @@ export default {
   methods: {
     activePage() {
       this.isActive = true;
-      console.log(Object.entries(this.rateCrypto))
     },
   },
   computed: {
@@ -102,7 +101,6 @@ export default {
     }
     .active {
       background-color: #185088;
-      border: 1px solid #fff;
       transition: all 0.3s;
       .webpage__exchanger-rates--current {
         .webpage__exchanger-rates--current_crypto, .webpage__exchanger-rates--current_rate {

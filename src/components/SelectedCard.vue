@@ -9,7 +9,7 @@
     </div>
     <div class="webpage__exchanger-select--radio">
       <template v-for="(item, index) in VALUE_CURRENCIES">
-        <input type="radio" :key="index + 'input'" :id="item" name="crypto" :value="item">
+        <input v-model="exchangeCurrency" type="radio" :key="index + 'input'" :id="item" name="crypto" :value="item">
           <label :for="item" :key="index + 'label'">{{ item }}</label>
       </template>
     </div>
@@ -33,7 +33,6 @@
 
 <script>
 import { VALUE_CURRENCIES } from '@/constants/VALUE_CURRENCIES';
-import { CRYPTO_CURRENCIES } from '@/constants/CRYPTO_CURRENCIES';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -41,8 +40,8 @@ export default {
   data: () => ({
     VALUE_CURRENCIES,
     exchangeVolume: 0,
-    selected: CRYPTO_CURRENCIES[0],
-    exchangeCurrency: VALUE_CURRENCIES[0],
+    selected: 'BTC',
+    exchangeCurrency: 'UAH',
   }),
 
   watch: {
