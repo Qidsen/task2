@@ -1,23 +1,21 @@
 <template>
   <div class="webpage__exchanger-rates">
-    <div v-for="(cryptoItem, index) in rateCrypto" :key="index"
-      @click="activePage(index)"
-      :class="{ 'active': index == 'ETH' }" 
+    <div
+      @click="$emit(EVENTS.select)"
       class="webpage__exchanger-rates--card" >
-
       <div class="webpage__exchanger-rates--crypto">
-        <img :src='require(`@/assets/img/png/${index}.png`)' :alt='`${index}`'>
-        <span> {{ index }} </span>
+        <img :src='require(`@/assets/img/png/${imgPath}.png`)' :alt='`${imgPath}`'>
+        <span> {{ crypto }} </span>
       </div>
       <table class="webpage__exchanger-table">
         <tbody>
-          <template v-for="(valueItem, index) in rateValue">
+          <template v-for="(valueItem, index) in getRatesValue">
             <tr :key="index" class="webpage__exchanger-rates--current">
               <td class="webpage__exchanger-rates--current_crypto">
                 {{ `${index}:` }}
               </td>
               <td class="webpage__exchanger-rates--current_rate">
-                {{ (valueItem / cryptoItem).toFixed(2) }}
+                {{ (valueItem / getRatesCrypto[crypto]).toFixed(2) }}
               </td>
             </tr>
           </template>
@@ -28,20 +26,36 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
+const EVENTS = {
+  select: 'select',
+};
 
 export default {
   name: 'RateCards',
-  data: () => ({
-    isActive: false,
-  }), 
-  methods: {
-    activePage() {
-      this.isActive = true;
+  props: {
+    imgPath: {
+      type: String,
+      required: true,
+    },
+    crypto: {
+      type: String,
+      default: '',
+    },
+    rates: {
+      type: Object,
+      default: () => ({
+        UAH: 0,
+        USD: 0,
+        RUB: 0,
+      }), 
     },
   },
+  data: () => ({
+    EVENTS,
+  }),
   computed: {
-    ...mapState('rates', ['rateCrypto', 'rateValue']),
+    ...mapGetters('rates', ['getRatesCrypto', 'getRatesValue']),
   },
 };
 </script>
@@ -49,16 +63,15 @@ export default {
 <style lang="scss">
   .webpage__exchanger-rates {
     width: 100%;
+    max-width: 510px;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    margin: 100px 0;
 
     .webpage__exchanger-rates--card {
       width: 100%;
       max-width: 450px;
-      height: 240px;
+      height: 200px;
       padding: 30px 30px;
-      margin: 120px 10px;
       background-color: #0d2f52;
       display: flex;
       cursor: pointer;
@@ -96,15 +109,6 @@ export default {
         .webpage__exchanger-rates--current_rate {
           padding: 0;
           font-weight: normal;
-        }
-      }
-    }
-    .active {
-      background-color: #185088;
-      transition: all 0.3s;
-      .webpage__exchanger-rates--current {
-        .webpage__exchanger-rates--current_crypto, .webpage__exchanger-rates--current_rate {
-          color: #a6c5e4;
         }
       }
     }

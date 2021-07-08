@@ -4,15 +4,13 @@
       <Loader />
     </div>
     <div v-else class="webpage__exchange">
-      <RateCards />
       <SelectedCard />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import RateCards from '@/components/RateCards';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import SelectedCard from '@/components/SelectedCard';
 import Loader from '@/components/Loader';
 
@@ -26,14 +24,15 @@ export default {
   },
   computed: {
     ...mapState('rates', ['rateCrypto', 'rateValue']),
+    ...mapGetters('rates', ['getRatesValue', 'getNameValue']),
   },
   async created() {
     await this.GET_RATES(this.rateCrypto, this.rateValue);
     this.loading = false;
+    console.log(this.getRatesValue);
   },
   components: {
     Loader,
-    RateCards,
     SelectedCard,
   },
 }

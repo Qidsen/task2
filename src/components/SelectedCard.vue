@@ -1,5 +1,16 @@
 <template>
   <div class="webpage__exchanger-select">
+    <div class="webpage__exchanger-cards">
+      <template v-for="(cryptoItem, index) in getRatesCrypto">
+        <rate-cards
+          :class="{ 'active': selected == index }"
+          :key="index"
+          :crypto="index"
+          :imgPath="`${index}`"
+          @select="selected = index"
+        />
+      </template>
+    </div>
     <div class="webpage__exchanger-select--current">
       <span>Selected coin: {{ selected }}</span>
     </div>
@@ -32,6 +43,7 @@
 </template>
 
 <script>
+import RateCards from '@/components/RateCards'
 import { VALUE_CURRENCIES } from '@/constants/VALUE_CURRENCIES';
 import { mapGetters } from 'vuex';
 
@@ -43,7 +55,6 @@ export default {
     selected: 'BTC',
     exchangeCurrency: 'UAH',
   }),
-
   watch: {
     exchangeVolume: {
       handler(val, oldVal) {
@@ -53,9 +64,11 @@ export default {
       },
     },
   },
-
   computed: {
-    ...mapGetters('rates', ['getRatesCrypto' ,'getRatesValue']),
+    ...mapGetters('rates', ['getRatesCrypto' ,'getRatesValue', 'getNameValue']),
+  },
+  components: {
+    RateCards,
   },
 }
 </script>
@@ -67,8 +80,29 @@ export default {
     flex-direction: column;
     align-items: center;
 
+    .webpage__exchanger-cards {
+      width: 100%;
+      max-width: 1600px;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    
+    .active {
+      .webpage__exchanger-rates--card {
+        background-color: #185088;
+        transition: all 0.3s;
+        
+        .webpage__exchanger-rates--current {
+          .webpage__exchanger-rates--current_crypto, .webpage__exchanger-rates--current_rate {
+            color: #a6c5e4;
+          }
+        }
+      }
+    }
+
     .webpage__exchanger-select--current {
-      margin-top: -50px;
       font-family: 'Trebuchet MS', sans-serif;
       font-size: 40px;
       color: #78a6eb;
