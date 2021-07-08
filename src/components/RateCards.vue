@@ -9,13 +9,13 @@
       </div>
       <table class="webpage__exchanger-table">
         <tbody>
-          <template v-for="(valueItem, index) in getRatesValue">
+          <template v-for="(valueItem, index) in rateValue">
             <tr :key="index" class="webpage__exchanger-rates--current">
               <td class="webpage__exchanger-rates--current_crypto">
                 {{ `${index}:` }}
               </td>
               <td class="webpage__exchanger-rates--current_rate">
-                {{ (valueItem / getRatesCrypto[crypto]).toFixed(2) }}
+                {{ (valueItem / rateCrypto[crypto]).toFixed(2) }}
               </td>
             </tr>
           </template>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 const EVENTS = {
   select: 'select',
 };
@@ -42,20 +42,12 @@ export default {
       type: String,
       default: '',
     },
-    rates: {
-      type: Object,
-      default: () => ({
-        UAH: 0,
-        USD: 0,
-        RUB: 0,
-      }), 
-    },
   },
   data: () => ({
     EVENTS,
   }),
   computed: {
-    ...mapGetters('rates', ['getRatesCrypto', 'getRatesValue']),
+    ...mapState('rates', ['rateCrypto', 'rateValue']),
   },
 };
 </script>

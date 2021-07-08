@@ -1,7 +1,7 @@
 <template>
   <div class="webpage__exchanger-select">
     <div class="webpage__exchanger-cards">
-      <template v-for="(cryptoItem, index) in getRatesCrypto">
+      <template v-for="(cryptoItem, index) in rateCrypto">
         <rate-cards
           :class="{ 'active': selected == index }"
           :key="index"
@@ -31,7 +31,7 @@
         </b>
         will be
         <b>
-          {{ (exchangeVolume * (getRatesValue[exchangeCurrency] / getRatesCrypto[selected])).toFixed(2) }}
+          {{ (exchangeVolume * (rateValue[exchangeCurrency] / rateCrypto[selected])).toFixed(2) }}
         </b>
         in
         <b>
@@ -45,7 +45,7 @@
 <script>
 import RateCards from '@/components/RateCards'
 import { VALUE_CURRENCIES } from '@/constants/VALUE_CURRENCIES';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'SelectedCard',
@@ -65,7 +65,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters('rates', ['getRatesCrypto' ,'getRatesValue', 'getNameValue']),
+    ...mapState('rates', ['rateCrypto' ,'rateValue']),
   },
   components: {
     RateCards,

@@ -8,10 +8,6 @@ export default {
     rateCrypto: {},
     rateValue: {},
   },
-  getters: {
-    getRatesCrypto: (state) => state.rateCrypto,
-    getRatesValue: (state) => state.rateValue,
-  }, 
   mutations: {
     takeRatesCrypto(state, payload) {
       let filteredArray = {};
