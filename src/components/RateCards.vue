@@ -54,10 +54,10 @@ export default {
 
 <style lang="scss">
   .webpage__exchanger-rates {
-    width: 100%;
-    max-width: 510px;
+    width: 450px;
     display: flex;
     margin: 100px 0;
+    padding: 0 auto;
 
     .webpage__exchanger-rates--card {
       width: 100%;
@@ -74,8 +74,8 @@ export default {
         align-items: center;
 
         img {
-          width: 100px;
-          height: 100px;
+          width: 64px;
+          height: 64px;
         }
 
         span {

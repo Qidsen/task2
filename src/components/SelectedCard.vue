@@ -82,11 +82,9 @@ export default {
 
     .webpage__exchanger-cards {
       width: 100%;
-      max-width: 1600px;
       margin: 0;
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
     }
     
     .active {
